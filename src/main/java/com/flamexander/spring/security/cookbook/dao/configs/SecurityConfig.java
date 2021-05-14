@@ -21,8 +21,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         log.info("Dao Authentication Provider");
         http.authorizeRequests()
                 .antMatchers("/authenticated/**").authenticated()
+                .antMatchers("/message/**").hasAnyAuthority("READ_MESSAGE")
+                .antMatchers("/create_product/**").hasAnyAuthority("CREATE_PRODUCT")
+                .antMatchers("/update_product/**").hasAnyAuthority("UPDATE_PRODUCT")
+                .antMatchers("/send_comment/**").hasAnyAuthority("SEND_COMMENT")
+                .antMatchers("/delete_product/**").hasAnyAuthority("DELETE_PRODUCT")
                 .antMatchers("/user_info").authenticated()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPERADMIN") // ROLE_ADMIN, ROLE_SUPERADMIN
+                .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPERADMIN")
+                .antMatchers("/products").hasAnyRole("USER", "ADMIN", "SUPERADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin();

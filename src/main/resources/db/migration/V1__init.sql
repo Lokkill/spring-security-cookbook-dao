@@ -20,6 +20,20 @@ CREATE TABLE users_roles (
   foreign key (role_id) references roles (id)
 );
 
+CREATE TABLE authorities (
+  id                    bigserial,
+  name                  varchar(30) not null,
+  primary key (id)
+);
+
+CREATE TABLE roles_authorities (
+  role_id               bigint not null,
+  authorities_id        int not bull,
+  primary key (role_id, authorities_id),
+  foreign key (role_id) references roles (id),
+  foreign key (authorities_id) references authorities (id)
+);
+
 insert into roles (name)
 values
 ('ROLE_USER'), ('ROLE_ADMIN');
@@ -32,3 +46,18 @@ insert into users_roles (user_id, role_id)
 values
 (1, 1),
 (1, 2);
+
+insert into authorities (name) values (
+('CREATE_PRODUCT'),
+('DELETE_PRODUCT'),
+('UPDATE_PRODUCT'),
+('READ_MESSAGE'),
+('SEND_COMMENT')
+);
+
+insert into roles_authorities (role_id, authorities_id) values (
+(2, 1)
+(2, 2)
+(2, 3)
+(1, 4)
+);
